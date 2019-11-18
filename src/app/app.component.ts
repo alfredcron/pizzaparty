@@ -1,6 +1,7 @@
 import {Component} from '@angular/core'
 import { Title } from '@angular/platform-browser'
-import { Pizza } from './models/pizza.model';
+import { Pizza } from './models/pizza.model'
+import { User } from './models/user.model'
 
 
 const PIZZAS : Pizza[] = [
@@ -37,4 +38,7 @@ export class AppComponent {
    console.log(pizza);
    this.selectedPizza = pizza;
  }
+
+ // Auteur à afficher
+ user: User = new User('Cron','Alfred','23-05-1989','photo');
 }
