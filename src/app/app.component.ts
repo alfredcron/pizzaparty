@@ -1,12 +1,7 @@
 import {Component} from '@angular/core'
 import { Title } from '@angular/platform-browser'
+import { Pizza } from './models/pizza.model';
 
-class Pizza {
-  id: number;
-  name: string;
-  price: number;
-  image?: string;
-}
 
 const PIZZAS : Pizza[] = [
   { id: 1, name: 'Reine', price: 12 },
@@ -21,6 +16,10 @@ const PIZZAS : Pizza[] = [
   styles: [`
     li:hover {
       cursor: pointer;
+    }
+    .selected {
+      font-weight: bold;
+      color : red;
     }
   `]
 })
