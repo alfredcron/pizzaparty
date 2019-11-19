@@ -2,6 +2,7 @@ import {Component} from '@angular/core'
 import { Title } from '@angular/platform-browser'
 import { Pizza } from './models/pizza.model'
 import { User } from './models/user.model'
+import { Ingredient } from './models/ingredient';
 
 
 const PIZZAS : Pizza[] = [
@@ -41,4 +42,10 @@ export class AppComponent {
 
  // Auteur à afficher
  user: User = new User('Cron','Alfred','23-05-1989','photo');
+
+ ingredients: Ingredient[] = [
+   {name: 'Tomate', image: 'photo', weight: 12, price: 15},
+   {name: 'Mozza', image: 'photo', weight: 13, price: 15}
+ ]
+
 }
