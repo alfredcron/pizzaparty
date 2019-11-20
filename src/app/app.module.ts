@@ -7,6 +7,11 @@ import { PizzaComponent } from './pizza/pizza.component';
 import { AuthorComponent } from './author/author.component';
 import { IngredientListComponent } from './ingredient-list/ingredient-list.component';
 import { MenuComponent } from './menu/menu.component';
+import { PizzaService } from './services/pizza.service';
+import { MessageComponent } from './message/message.component';
+import { AgePipe } from './pipes/age.pipe';
+import { TvaPipe } from './pipes/tva.pipe';
+import { SortPipe } from './pipes/sort.pipe';
 
 @NgModule({
   declarations: [
@@ -14,13 +19,17 @@ import { MenuComponent } from './menu/menu.component';
     PizzaComponent,
     AuthorComponent,
     IngredientListComponent,
-    MenuComponent
+    MenuComponent,
+    MessageComponent,
+    AgePipe,
+    TvaPipe,
+    SortPipe
   ],
   imports: [
     BrowserModule,
     FormsModule
   ],
-  providers: [],
+  providers: [PizzaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

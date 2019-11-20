@@ -4,5 +4,6 @@
         <img [src]="ingredient.image" [alt]="ingredient.name">
         <p>{{ ingredient.weight }}</p>
         <p>{{ ingredient.price }}</p>
+        <button class="btn btn-danger" (click)="add(ingredient)"> Ajouter</button>
     </div>
 </div>

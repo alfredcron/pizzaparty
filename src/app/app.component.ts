@@ -1,19 +1,13 @@
-import {Component} from '@angular/core'
-import { Title } from '@angular/platform-browser'
-import { Pizza } from './models/pizza.model'
-import { User } from './models/user.model'
+import { Component } from '@angular/core';
+import { Pizza } from './models/pizza.model';
+import { User } from './models/user.model';
 import { Ingredient } from './models/ingredient';
+import { PizzaService } from './services/pizza.service';
+import { $ } from 'protractor';
+import { MessageService } from './services/message.service';
 
-
-const PIZZAS : Pizza[] = [
-  { id: 1, name: 'Reine', price: 12 },
-  { id: 2, name: '4 fromages', price: 13 },
-  { id: 3, name: 'Orientale', price: 11 },
-  { id: 4, name: 'Cannibale', price: 9 }
-];
-
-@Component ({
-  selector : 'app-root',
+@Component({
+  selector: 'app-root',
   templateUrl: './app.component.html',
   styles: [`
     li:hover {
@@ -21,31 +15,57 @@ const PIZZAS : Pizza[] = [
     }
     .selected {
       font-weight: bold;
-      color : red;
+      color: red;
     }
   `]
 })
-
 export class AppComponent {
   title = 'Mon super site';
-  
+
   selectedPizza: Pizza;
+  // Liste de pizzas à afficher dans le composant
+  pizzas: Pizza[];
 
- // Liste des pizzas à afficher dans le composant
- pizzas: Pizza[]= PIZZAS;
+  user: User = new User('Mota', 'Matthieu', '1991-11-18', 'https://...');
+  ingredients: Ingredient[] = [
+    { name: 'Tomate', image: 'assets/ingredients/' + 'tomato.png', weight: 20, price: 0.50 },
+    { name: 'Avocat', image: 'assets/ingredients/' + 'avocado.png', weight: 60, price: 1.50 }
+  ];
 
- // Quand on clique sur une pizza
- onSelect(pizza: Pizza) {
-   console.log(pizza);
-   this.selectedPizza = pizza;
- }
+  constructor(
+    private pizzaService: PizzaService,
+    private messageService: MessageService
+  ) { }
 
- // Auteur à afficher
- user: User = new User('Cron','Alfred','23-05-1989','photo');
+  // Hook appelé à l'initialisation du composant
+  ngOnInit() {
+    this.pizzaService.getPizzas().then(
+      pizzas => this.pizzas = pizzas
+    );
+  }
 
- ingredients: Ingredient[] = [
-   {name: 'Tomate', image: 'photo', weight: 12, price: 15},
-   {name: 'Mozza', image: 'photo', weight: 13, price: 15}
- ]
+  // Quand on clique sur une pizza
+  onSelect(pizza: Pizza) {
+    console.log(pizza);
+    // Si une pizza est déjà sélectionnée, on reset
+    if (this.selectedPizza) {
+      this.selectedPizza.ingredient = null;
+    }
+    this.selectedPizza = pizza;
 
+    this.messageService.addMessage(
+      'Ajout de la pizza ' + this.selectedPizza.name
+    );
+  }
+
+  // Quand on reçoit l'événement de l'enfant
+  unSelect(pizza: Pizza) {
+    console.log(pizza);
+    this.selectedPizza = this.selectedPizza.ingredient = null;
+  }
+
+  // Quand on choisit un ingredient dans le composant ingredient-list
+  addIngredient(ingredient: Ingredient) {
+    this.selectedPizza.ingredient = ingredient;
+  }
 }

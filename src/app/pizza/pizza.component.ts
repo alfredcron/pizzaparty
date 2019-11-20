@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, Output, EventEmitter} from "@angular/core";
 import { Pizza } from '../models/pizza.model';
 
 @Component({
@@ -8,4 +8,11 @@ import { Pizza } from '../models/pizza.model';
 
 export class PizzaComponent{
     @Input('pizza') selectedPizza : Pizza;
+    @Output() unselected: EventEmitter<any> = new EventEmitter();
+
+    delete() {
+        // Quand une pizza est supprimée, on doit pouvoir informer le composant parent
+        this.unselected.emit(this.selectedPizza);
+        this.selectedPizza = null;  
+    }
 }

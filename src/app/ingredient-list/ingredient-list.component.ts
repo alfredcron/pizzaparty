@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {Ingredient} from '../models/ingredient'
 
 @Component({
@@ -10,7 +10,13 @@ export class IngredientListComponent implements OnInit {
   @Input() ingredients : Array<Ingredient>;
   constructor() { }
 
-  ngOnInit() {
+  @Output() selected: EventEmitter<any> = new EventEmitter();
+
+  add(ingredient:Ingredient) {
+      // Quand une pizza est supprimée, on doit pouvoir informer le composant parent   
+      this.selected.emit(ingredient);
   }
 
+  ngOnInit() {
+  }
 }
