@@ -1,29 +1,43 @@
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">{{title}}</a>
-    <button class="navbar-toggler" type="button" (click)="toggleCollapseNavbar()" 
-    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <a class="navbar-brand" routerLink="/">{{title}}</a>
+  <button class="navbar-toggler" type="button" (click)="toggleCollapseNavbar()" aria-controls="navbarSupportedContent"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-    <div class="collapse navbar-collapse"
-         [class.show]="isCollapsed" [ngClass]="{ show: isCollapsed }"
-         id="navbarNav">
-        <ul class="navbar-nav">
-        <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
-        </ul>
-    </div>
-  </nav>
-
-
+  <div class="collapse navbar-collapse" [class.show]="isCollapsed" [ngClass]="{ show: isCollapsed }" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"> Accueil
+          <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/pizzas" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">Pizzas</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/pizzas/create" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">Créer une pizza</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/ingredients/create" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">Créer un ingrédient</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/contact" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">Contact</a>
+      </li>
+      <li class="nav-item" *ngIf="!user">
+        <a class="nav-link" routerLink="/register" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">Register</a>
+      </li>
+      <li class="nav-item" *ngIf="!user">
+        <a class="nav-link" routerLink="/login" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">Login</a>
+      </li>
+      <li class="nav-item" *ngIf="user">
+        <span class="nav-link"(click)="logout()" > {{user}} </span>
+      </li>
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,61 @@
+{
+  "ingredients": [
+    {
+      "id": 2,
+      "name": "Avocat",
+      "image": "avocado.png",
+      "weight": 60,
+      "price": 1.5
+    },
+    {
+      "name": "aii",
+      "price": 10,
+      "id": 3
+    },
+    {
+      "name": "ahjj",
+      "price": 10,
+      "id": 4
+    },
+    {
+      "name": "Avoca",
+      "price": 10,
+      "id": 5
+    },
+    {
+      "name": "Tomat",
+      "price": 10,
+      "id": 6
+    },
+    {
+      "name": "aaaa",
+      "price": 10,
+      "id": 7
+    }
+  ],
+  "pizzas": [
+    {
+      "id": 1,
+      "name": "Reine",
+      "price": 12,
+      "image": "reine.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Orientale",
+      "price": 11,
+      "image": "orientale.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Cannibale",
+      "price": 9,
+      "image": "cannibale.jpg"
+    },
+    {
+      "name": "Calzone",
+      "price": 12.5,
+      "id": 5
+    }
+  ]
+}

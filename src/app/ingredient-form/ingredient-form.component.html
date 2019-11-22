@@ -1,0 +1,40 @@
+<form (ngSubmit)="save()" [formGroup]="ingredientForm">
+    <div class="form-group">
+        <label for="name">Prix</label>
+        <input type="text" name="name" formControlName="name" class="form-control"
+            [class.is-invalid]="ingredientForm.get('name').dirty && ingredientForm.get('name').hasError('required')">
+        <div class="invalid-feedback"
+            *ngIf="ingredientForm.get('name').dirty && ingredientForm.get('name').hasError('required')">
+            Veuillez saisir le nom
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="price">Prix</label>
+        <input type="text" name="price" formControlName="price" class="form-control"
+            [class.is-invalid]="ingredientForm.get('price').dirty && ingredientForm.get('price').hasError('required')">
+        <div class="invalid-feedback"
+            *ngIf="ingredientForm.get('price').dirty && ingredientForm.get('price').hasError('required')">
+            Veuillez saisir le prix
+        </div>
+    </div>
+
+    {{ingredientForm.get('name').status}}
+
+    <div *ngIf="ingredientForm.get('name').status === 'PENDING'">
+        Chargement..
+    </div>
+
+    <div *ngIf="ingredientForm.get('name').dirty && ingredientForm.get('name').status === 'INVALID'"
+    class= "invalid-feedback d-block">
+        Ingédient invalide
+    </div>
+
+    <div *ngIf="ingredientForm.get('name').status === 'VALID'" class= "valid-feedback d-block">
+        Ingrédient dispo
+    </div>
+
+    <button class="btn=btn-primary" [disabled]="!ingredientForm.valid">
+        Ajouter l'ingrédient
+    </button>
+</form>

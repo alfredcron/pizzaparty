@@ -16,7 +16,7 @@ import { Message } from '../models/message.model';
 export class MessageComponent implements OnInit {
     messages: Message[];
 
-    constructor(private messageService: MessageService) {}
+    constructor(public messageService: MessageService) {}
 
     ngOnInit(): void {
         this.messageService.getMessages().then(

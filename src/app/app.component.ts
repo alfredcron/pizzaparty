@@ -5,6 +5,9 @@ import { Ingredient } from './models/ingredient';
 import { PizzaService } from './services/pizza.service';
 import { $ } from 'protractor';
 import { MessageService } from './services/message.service';
+import { Subscription } from 'rxjs';
+import { Router, NavigationStart, RouterEvent, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-root',
@@ -19,53 +22,40 @@ import { MessageService } from './services/message.service';
     }
   `]
 })
+
 export class AppComponent {
   title = 'Mon super site';
-
-  selectedPizza: Pizza;
-  // Liste de pizzas à afficher dans le composant
-  pizzas: Pizza[];
-
-  user: User = new User('Mota', 'Matthieu', '1991-11-18', 'https://...');
-  ingredients: Ingredient[] = [
-    { name: 'Tomate', image: 'assets/ingredients/' + 'tomato.png', weight: 20, price: 0.50 },
-    { name: 'Avocat', image: 'assets/ingredients/' + 'avocado.png', weight: 60, price: 1.50 }
-  ];
+  loading = false;
+  routerEvents: Subscription;
+  user;
 
   constructor(
-    private pizzaService: PizzaService,
-    private messageService: MessageService
-  ) { }
+    private router: Router,
+    private AuthService : AngularFireAuth
+    ) { }
 
-  // Hook appelé à l'initialisation du composant
   ngOnInit() {
-    this.pizzaService.getPizzas().then(
-      pizzas => this.pizzas = pizzas
-    );
+    // Ecouter le login
+    this.AuthService.authState.subscribe(user => {
+      this.user = (user !== null) ? user.email : null;
+      console.log(this.user);
+    })
+
+
+
+
+    this.routerEvents = this.router.events.subscribe((event: RouterEvent) => {
+      if (event instanceof NavigationStart) {
+        this.loading = true;
+      }
+
+      if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
+        this.loading = false;
+      }
+    });
   }
 
-  // Quand on clique sur une pizza
-  onSelect(pizza: Pizza) {
-    console.log(pizza);
-    // Si une pizza est déjà sélectionnée, on reset
-    if (this.selectedPizza) {
-      this.selectedPizza.ingredient = null;
-    }
-    this.selectedPizza = pizza;
-
-    this.messageService.addMessage(
-      'Ajout de la pizza ' + this.selectedPizza.name
-    );
-  }
-
-  // Quand on reçoit l'événement de l'enfant
-  unSelect(pizza: Pizza) {
-    console.log(pizza);
-    this.selectedPizza = this.selectedPizza.ingredient = null;
-  }
-
-  // Quand on choisit un ingredient dans le composant ingredient-list
-  addIngredient(ingredient: Ingredient) {
-    this.selectedPizza.ingredient = ingredient;
+  ngOnDestroy() {
+    this.routerEvents.unsubscribe();
   }
 }

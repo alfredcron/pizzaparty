@@ -1,0 +1,40 @@
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Ingredient } from '../models/ingredient';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { Pizza } from '../models/pizza.model';
+import { delay } from 'rxjs/operators';
+
+@Injectable({
+    providedIn: 'root'
+})
+export class IngredientService {
+    private url = 'http://localhost:3000/';
+
+    constructor(private http: HttpClient) { }
+
+    getIngredients(): Observable<Ingredient[]> {
+        return this.http.get(`${this.url}ingredients`).pipe(
+            map(response => response as Ingredient[])
+        );
+    }
+
+    create(ingredient: Ingredient): Observable<Ingredient> {
+        return this.http.post(`${this.url}ingredients`, ingredient).pipe(
+            map(response => response as Ingredient)
+        );
+    }
+
+    delete(id: number): Observable<Object> {
+        return this.http.delete(`${this.url}ingredients/${id}`);
+    }
+
+    exists(name: string): Observable<boolean> {
+        return this.http.get(`${this.url}ingredients/?name=${name}`).pipe(
+            delay(1500),
+            map((response: []) => response.length > 0 ? true : false)
+        );
+    }
+
+}

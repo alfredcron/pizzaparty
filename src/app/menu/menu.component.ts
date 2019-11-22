@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-menu',
@@ -8,8 +9,11 @@ import { Component, OnInit, Input } from '@angular/core';
 export class MenuComponent implements OnInit {
   isCollapsed: boolean = false;
   @Input() title: string;
+  @Input() user;
 
-  constructor() { }
+  constructor(
+    private authService: AngularFireAuth
+  ) { }
 
   ngOnInit() {
   }
@@ -17,4 +21,9 @@ export class MenuComponent implements OnInit {
   toggleCollapseNavbar(){
     this.isCollapsed= !this.isCollapsed;
   }
+
+  logout(){
+    this.authService.auth.signOut();
+  }
+
 }

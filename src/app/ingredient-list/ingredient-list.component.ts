@@ -1,5 +1,6 @@
-import { Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
-import {Ingredient} from '../models/ingredient'
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Ingredient } from '../models/ingredient';
+import { IngredientService } from '../services/ingredient.service';
 
 @Component({
   selector: 'app-ingredient-list',
@@ -7,16 +8,23 @@ import {Ingredient} from '../models/ingredient'
   styleUrls: ['./ingredient-list.component.scss']
 })
 export class IngredientListComponent implements OnInit {
-  @Input() ingredients : Array<Ingredient>;
-  constructor() { }
+  @Input() ingredients: Array<Ingredient>;
+  @Output() selected: EventEmitter<Ingredient> = new EventEmitter();
 
-  @Output() selected: EventEmitter<any> = new EventEmitter();
-
-  add(ingredient:Ingredient) {
-      // Quand une pizza est supprimée, on doit pouvoir informer le composant parent   
-      this.selected.emit(ingredient);
-  }
+  constructor(private ingredientService: IngredientService) { }
 
   ngOnInit() {
   }
+
+  select(ingredient: Ingredient) {
+    this.selected.emit(ingredient);
+  }
+
+  delete(ingredient: Ingredient) {
+    this.ingredientService.delete(ingredient.id).subscribe(_ => {
+      console.log('Suppression...');
+      this.ingredients = this.ingredients.filter(i => ingredient !== i);
+    });
+  }
+
 }

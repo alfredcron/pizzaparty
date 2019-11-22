@@ -1,0 +1,24 @@
+<form (ngSubmit)="save()" #pizzaForm="ngForm">
+    <div class="form-group">
+        <label for="name">Nom</label>
+        <input type="text" class="form-control" name="name" [(ngModel)]="pizza.name" #name="ngModel" required minlength="3"
+            [class.is-invalid]="name.dirty && name.invalid">
+        <div *ngIf="name.dirty && name.hasError('required')" class="invalid-feedback">
+            Nom de la pizza obligatoire
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label for="price">Prix</label>
+        <input type="number" class="form-control" name="price" [(ngModel)]="pizza.price" #price="ngModel" required minlength="3"
+            [class.is-invalid]="price.dirty && price.invalid">
+        <div *ngIf="price.dirty && price.hasError('required')" class="invalid-feedback">
+            Prix de la pizza obligatoire
+        </div>
+    </div>    
+
+    <button class="btn=btn-primary" [disabled]="pizzaForm.invalid">
+        Créer la pizza
+    </button>
+</form>

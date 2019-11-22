@@ -1,0 +1,36 @@
+<form (ngSubmit)="save()" [formGroup]="contactForm">
+    <div class="form-group">
+        <label for="mail">Email</label>
+        <input type="text" name="mail" formControlName="mail" class="form-control"
+            [class.is-invalid]="contactForm.get('mail').dirty && contactForm.get('mail').hasError('required')">
+        <div class="invalid-feedback"
+            *ngIf="contactForm.get('mail').dirty && contactForm.get('mail').hasError('required')">
+            Veuillez saisir un mail
+        </div>
+
+        <label for="subject">Subject</label>
+        <input type="text" name="subject" formControlName="subject" class="form-control"
+            [class.is-invalid]="contactForm.get('subject').dirty && contactForm.get('subject').hasError('required')">
+        <div class="invalid-feedback"
+            *ngIf="contactForm.get('subject').dirty && contactForm.get('subject').hasError('required')">
+            Veuillez saisir un sujet
+        </div>
+
+        <label for="content">Content</label>
+        <input type="text" name="content" formControlName="content" class="form-control"
+            [class.is-invalid]="contactForm.get('content').dirty && contactForm.get('content').hasError('required')">
+        <div class="invalid-feedback"
+            *ngIf="contactForm.get('content').dirty && contactForm.get('content').hasError('required')">
+            Veuillez saisir un contenu
+        </div>
+
+        <div *ngIf="contactForm.status === 'VALID'" class= "valid-feedback d-block">
+                Formulaire valide
+        </div>
+
+    </div>
+
+    <button class="btn=btn-primary" [disabled]="!contactForm.valid">
+        Valider le formulaire
+    </button>
+</form>
