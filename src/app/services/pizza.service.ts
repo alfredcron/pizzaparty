@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { PIZZAS } from '../mocks/pizza.mock';
 import { Pizza } from '../models/pizza.model';
 import { HttpClient } from '@angular/common//http';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PizzaService {
 
-  private url = 'http://localhost:3000/';
+  private url = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
